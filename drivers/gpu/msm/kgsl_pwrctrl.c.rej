@@ -1,0 +1,15 @@
+--- kernel/drivers/gpu/msm/kgsl_pwrctrl.c	2013-01-29 10:58:11.000000000 +0700
++++ drivers/gpu/msm/kgsl_pwrctrl.c	2013-11-24 07:53:18.000000000 +0700
+@@ -442,6 +442,12 @@
+ 	struct kgsl_pwrctrl *pwr = &device->pwrctrl;
+ 	int i = 0;
+ 	if (state == KGSL_PWRFLAGS_OFF) {
++#if defined (CONFIG_MACH_APQ8064_EF50L) 
++#if CONFIG_BOARD_VER <= CONFIG_TP10
++         return;
++#endif
++#endif
++
+ 		if (test_and_clear_bit(KGSL_PWRFLAGS_CLK_ON,
+ 			&pwr->power_flags)) {
+ 			trace_kgsl_clk(device, state);

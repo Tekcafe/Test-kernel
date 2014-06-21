@@ -1,0 +1,40 @@
+--- kernel/fs/proc/internal.h	2013-01-29 10:58:12.000000000 +0700
++++ fs/proc/internal.h	2013-11-24 07:53:18.000000000 +0700
+@@ -28,6 +28,13 @@
+ 
+ struct vmalloc_info {
+ 	unsigned long	used;
++#if defined(CONFIG_PANTECH_MORE_DEBUGGING_INFO_ON_KERNEL) && !defined(CONFIG_PANTECH_USER_BUILD)
++	unsigned long	ioremap;
++	unsigned long	alloc;
++	unsigned long	map;
++	unsigned long	usermap;
++	unsigned long	vpages;
++#endif	
+ 	unsigned long	largest_chunk;
+ };
+ 
+@@ -39,11 +46,23 @@
+ #else
+ 
+ #define VMALLOC_TOTAL 0UL
++#if defined(CONFIG_PANTECH_MORE_DEBUGGING_INFO_ON_KERNEL) && !defined(CONFIG_PANTECH_USER_BUILD)
+ #define get_vmalloc_info(vmi)			\
+ do {						\
+ 	(vmi)->used = 0;			\
++	(vmi)->ioremap = 0;		\
++	(vmi)->alloc = 0;		\
++	(vmi)->map = 0;		\
++	(vmi)->usermap = 0;		\
++	(vmi)->vpages = 0;		\
+ 	(vmi)->largest_chunk = 0;		\
+ } while(0)
++#else
++#define get_vmalloc_info(vmi)			\
++do {						\
++	(vmi)->used = 0;			\
++} while(0)
++#endif
+ #endif
+ 
+ extern int proc_tid_stat(struct seq_file *m, struct pid_namespace *ns,

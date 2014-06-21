@@ -1,0 +1,16 @@
+--- kernel/fs/ext4/Kconfig	2013-01-29 10:58:12.000000000 +0700
++++ fs/ext4/Kconfig	2013-11-24 07:53:18.000000000 +0700
+@@ -75,6 +75,13 @@
+ 	  If you are not using a security module that requires using
+ 	  extended attributes for file security labels, say N.
+ 
++config PANTECH_EXT4_USERDATA_RECOVERY
++	bool "Ext4 User Data recovery(PANTECH)"
++	depends on EXT4_FS
++	default y
++	help
++	  Recovery ext4 Userdata, in case of file system error.
++
+ config EXT4_DEBUG
+ 	bool "EXT4 debugging support"
+ 	depends on EXT4_FS

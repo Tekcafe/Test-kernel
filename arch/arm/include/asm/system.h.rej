@@ -1,0 +1,12 @@
+--- kernel/arch/arm/include/asm/system.h	2013-01-29 10:58:12.000000000 +0700
++++ arch/arm/include/asm/system.h	2013-11-24 07:53:18.000000000 +0700
+@@ -6,3 +6,9 @@
+ #include <asm/switch_to.h>
+ #include <asm/system_info.h>
+ #include <asm/system_misc.h>
++
++
++#ifdef CONFIG_PANTECH_ERR_CRASH_LOGGING
++extern void __save_regs_and_mmu(struct pt_regs *regs, bool is_die);
++#endif
++
